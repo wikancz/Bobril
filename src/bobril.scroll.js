@@ -69,4 +69,3 @@
     b.isScrollable = isScrollable;
     b.getWindowScroll = getWindowScroll;
 })(b, window);
-//# sourceMappingURL=bobril.scroll.js.map

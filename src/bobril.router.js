@@ -279,4 +279,3 @@
     b.routeNotFound = routeNotFound;
     b.link = link;
 })(b, window);
-//# sourceMappingURL=bobril.router.js.map

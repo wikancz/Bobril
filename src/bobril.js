@@ -31,8 +31,7 @@ if (!Array.prototype.map) {
 // Object create polyfill
 if (!Object.create) {
     Object.create = function (o) {
-        function f() {
-        }
+        function f() { }
         f.prototype = o;
         return new f();
     };
@@ -108,7 +107,7 @@ b = (function (window, document) {
         orphans: true,
         widows: true,
         zIndex: true,
-        zoom: true
+        zoom: true,
     };
     function renamer(newName) {
         return function (style, value, oldName) {
@@ -653,7 +652,8 @@ b = (function (window, document) {
             }
         }
         if (DEBUG) {
-            if (!((n.ref == null && c.ref == null) || ((n.ref != null && c.ref != null && n.ref[0] === c.ref[0] && n.ref[1] === c.ref[1])))) {
+            if (!((n.ref == null && c.ref == null) ||
+                ((n.ref != null && c.ref != null && n.ref[0] === c.ref[0] && n.ref[1] === c.ref[1])))) {
                 if (window.console && console.warn)
                     console.warn("ref changed in child in update");
             }
@@ -905,6 +905,7 @@ b = (function (window, document) {
             if (newIndex === newEnd) {
                 return cachedChildren;
             }
+            // Only work left is to add new nodes
             while (newIndex < newEnd) {
                 cachedChildren.splice(cachedIndex, 0, createNode(newChildren[newIndex], parentNode, element, findNextNode(cachedChildren, cachedIndex - 1, cachedLength, createBefore)));
                 cachedIndex++;
@@ -915,6 +916,7 @@ b = (function (window, document) {
             return cachedChildren;
         }
         if (newIndex === newEnd) {
+            // Only work left is to remove old nodes
             while (cachedIndex < cachedEnd) {
                 cachedEnd--;
                 removeNode(cachedChildren[cachedEnd]);
@@ -1019,6 +1021,7 @@ b = (function (window, document) {
                 newIndex++;
             }
         }
+        // remove old keyed cached nodes
         while (cachedIndex < cachedEnd) {
             if (cachedChildren[cachedIndex] === null) {
                 cachedChildren.splice(cachedIndex, 1);
@@ -1035,6 +1038,7 @@ b = (function (window, document) {
             }
             cachedIndex++;
         }
+        // add new keyed nodes
         while (newIndex < newEnd) {
             key = newChildren[newIndex].key;
             if (key != null) {
@@ -1126,10 +1130,8 @@ b = (function (window, document) {
     var hasNativeRaf = false;
     var nativeRaf = window.requestAnimationFrame;
     if (nativeRaf) {
-        nativeRaf(function (param) {
-            if (param === +param)
-                hasNativeRaf = true;
-        });
+        nativeRaf(function (param) { if (param === +param)
+            hasNativeRaf = true; });
     }
     var now = Date.now || (function () { return (new Date).getTime(); });
     var startTime = now();
@@ -1212,8 +1214,10 @@ b = (function (window, document) {
         var len = cache.length;
         for (var i = 0; i < len; i++) {
             var node = cache[i];
-            if (node.ctx != null && node.ctx[ctxInvalidated] === frame) {
-                cache[i] = updateNode(cloneNode(node), node, element, createBefore, node.ctx[ctxDeepness]);
+            var ctx = node.ctx;
+            if (ctx != null && ctx[ctxInvalidated] === frame) {
+                var cloned = { data: ctx.data, component: node.component };
+                cache[i] = updateNode(cloned, node, element, createBefore, ctx[ctxDeepness]);
             }
             else if (isArray(node.children)) {
                 var backupInSvg = inSvg;
@@ -1224,8 +1228,7 @@ b = (function (window, document) {
             }
         }
     }
-    var afterFrameCallback = function () {
-    };
+    var afterFrameCallback = function () { };
     function setAfterFrame(callback) {
         var res = afterFrameCallback;
         afterFrameCallback = callback;
@@ -1518,4 +1521,3 @@ b = (function (window, document) {
         cloneNode: cloneNode
     };
 })(window, document);
-//# sourceMappingURL=bobril.js.map

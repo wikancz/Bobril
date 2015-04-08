@@ -83,24 +83,10 @@
     if (b.ieVersion() && b.ieVersion() < 11) {
         // emulate pointer-events: none in older ie
         var mouseEvents = [
-            "click",
-            "dblclick",
-            "drag",
-            "dragend",
-            "dragenter",
-            "dragleave",
-            "dragover",
-            "dragstart",
-            "drop",
-            "mousedown",
-            "mousemove",
-            "mouseout",
-            "mouseover",
-            "mouseup",
-            "mousewheel",
-            "scroll",
-            "wheel"
-        ];
+            "click", "dblclick", "drag", "dragend",
+            "dragenter", "dragleave", "dragover", "dragstart",
+            "drop", "mousedown", "mousemove", "mouseout",
+            "mouseover", "mouseup", "mousewheel", "scroll", "wheel"];
         for (i = 0; i < mouseEvents.length; ++i) {
             addEvent(mouseEvents[i], 1, pointerThroughIE);
         }
@@ -170,29 +156,29 @@
         };
     }
     if (window.onpointerdown !== undefined) {
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 4 /*pointersEventNames.length*/; i++) {
             var name = pointersEventNames[i];
             addEvent5(name.toLowerCase(), buildHandlerPointer(name));
         }
     }
     else if (window.onmspointerdown !== undefined) {
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 4 /*pointersEventNames.length*/; i++) {
             var name = pointersEventNames[i];
             addEvent5("MS" + name, buildHandlerPointer(name));
         }
     }
     else {
         if (window.ontouchstart !== undefined) {
-            addEvent5("touchstart", buildHandlerTouch(pointersEventNames[0]));
-            addEvent5("touchmove", buildHandlerTouch(pointersEventNames[1]));
-            addEvent5("touchend", buildHandlerTouch(pointersEventNames[2]));
-            addEvent5("touchcancel", buildHandlerTouch(pointersEventNames[3]));
+            addEvent5("touchstart", buildHandlerTouch(pointersEventNames[0] /*"PointerDown"*/));
+            addEvent5("touchmove", buildHandlerTouch(pointersEventNames[1] /*"PointerMove"*/));
+            addEvent5("touchend", buildHandlerTouch(pointersEventNames[2] /*"PointerUp"*/));
+            addEvent5("touchcancel", buildHandlerTouch(pointersEventNames[3] /*"PointerCancel"*/));
         }
-        addEvent5("mousedown", buildHandlerMouse(pointersEventNames[0]));
-        addEvent5("mousemove", buildHandlerMouse(pointersEventNames[1]));
-        addEvent5("mouseup", buildHandlerMouse(pointersEventNames[2]));
+        addEvent5("mousedown", buildHandlerMouse(pointersEventNames[0] /*"PointerDown"*/));
+        addEvent5("mousemove", buildHandlerMouse(pointersEventNames[1] /*"PointerMove"*/));
+        addEvent5("mouseup", buildHandlerMouse(pointersEventNames[2] /*"PointerUp"*/));
     }
-    for (var j = 0; j < 4; j++) {
+    for (var j = 0; j < 4 /*pointersEventNames.length*/; j++) {
         (function (name) {
             var onname = "on" + name;
             addEvent("!" + name, 50, function (ev, target, node) {
@@ -324,7 +310,7 @@
     }
     var bustingEventNames = ["!PointerDown", "!PointerMove", "!PointerUp", "!PointerCancel", "click"];
     var bustingEventHandlers = [bustingPointerDown, bustingPointerMove, bustingPointerUp, bustingPointerCancel, bustingClick];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 5 /*bustingEventNames.length*/; i++) {
         addEvent(bustingEventNames[i], 3, bustingEventHandlers[i]);
     }
     function createHandlerMouse(handlerName) {
@@ -365,4 +351,3 @@
     b.isMouseOwnerEvent = isMouseOwnerEvent;
     b.releaseMouseOwner = releaseMouseOwner;
 })(b, window, document);
-//# sourceMappingURL=bobril.mouse.js.map

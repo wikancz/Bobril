@@ -187,4 +187,3 @@
     for (var i = 0; i < events.length; i++)
         b.addEvent(events[i], 10, emitOnChange);
 })(b);
-//# sourceMappingURL=bobril.onchange.js.map

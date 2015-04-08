@@ -78,19 +78,19 @@
     var isArray = b.isArray;
     function handle(deferred) {
         var _this = this;
-        if (this.s === null) {
-            this.d.push(deferred);
+        if (this.s /*tate*/ === null) {
+            this.d /*eferreds*/.push(deferred);
             return;
         }
         asap(function () {
-            var cb = _this.s ? deferred[0] : deferred[1];
+            var cb = _this.s /*tate*/ ? deferred[0] : deferred[1];
             if (cb == null) {
-                (_this.s ? deferred[2] : deferred[3])(_this.v);
+                (_this.s /*tate*/ ? deferred[2] : deferred[3])(_this.v /*alue*/);
                 return;
             }
             var ret;
             try {
-                ret = cb(_this.v);
+                ret = cb(_this.v /*alue*/);
             }
             catch (e) {
                 deferred[3](e);
@@ -100,14 +100,14 @@
         });
     }
     function finale() {
-        for (var i = 0, len = this.d.length; i < len; i++) {
-            handle.call(this, this.d[i]);
+        for (var i = 0, len = this.d /*eferreds*/.length; i < len; i++) {
+            handle.call(this, this.d /*eferreds*/[i]);
         }
-        this.d = null;
+        this.d /*eferreds*/ = null;
     }
     function reject(newValue) {
-        this.s = false;
-        this.v = newValue;
+        this.s /*tate*/ = false;
+        this.v /*alue*/ = newValue;
         finale.call(this);
     }
     /**
@@ -149,8 +149,8 @@
                     return;
                 }
             }
-            this.s = true;
-            this.v = newValue;
+            this.s /*tate*/ = true;
+            this.v /*alue*/ = newValue;
             finale.call(this);
         }
         catch (e) {
@@ -158,9 +158,9 @@
         }
     }
     function Promise(fn) {
-        this.s = null;
-        this.v = null;
-        this.d = [];
+        this.s /*tate*/ = null;
+        this.v /*alue*/ = null;
+        this.d /*eferreds*/ = [];
         doResolve(fn, bind(resolve, this), bind(reject, this));
     }
     Promise.prototype.then = function (onFulfilled, onRejected) {
@@ -182,9 +182,7 @@
                     if (val && (typeof val === 'object' || typeof val === 'function')) {
                         var then = val.then;
                         if (typeof then === 'function') {
-                            then.call(val, function (val) {
-                                res(i, val);
-                            }, reject);
+                            then.call(val, function (val) { res(i, val); }, reject);
                             return;
                         }
                     }
@@ -221,4 +219,5 @@
     b.asap = asap;
     b.Promise = Promise;
 })(b, window, document);
-//# sourceMappingURL=bobril.promise.js.map
+if (!Promise)
+    Promise = b.Promise;

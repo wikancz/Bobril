@@ -5,7 +5,7 @@
         "module": "commonjs",
         "declaration": false,
         "noImplicitAny": true,
-        "removeComments": true,
+        "removeComments": false,
         "noLib": false
     },
     "compileOnSave": false,
@@ -15,6 +15,8 @@
     ],
     "files": [
         "./bobril.d.ts",
+        "./bobril.dnd.d.ts",
+        "./bobril.dnd.ts",
         "./bobril.focus.d.ts",
         "./bobril.focus.ts",
         "./bobril.media.d.ts",

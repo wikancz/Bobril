@@ -56,4 +56,3 @@
     addEvent("!PointerMove", 70, handlePointerMove);
     addEvent("!PointerUp", 70, handlePointerUp);
 })(b);
-//# sourceMappingURL=bobril.swipe.js.map
